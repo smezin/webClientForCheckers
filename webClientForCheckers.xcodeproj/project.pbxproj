@@ -3,19 +3,23 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3258646D94FBF8078B4CBA07 /* Pods_webClientForCheckers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 423C97F00D141C852F5F2067 /* Pods_webClientForCheckers.framework */; };
 		E1BA2217247047C200A8EEAB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BA2216247047C200A8EEAB /* AppDelegate.swift */; };
 		E1BA2219247047C200A8EEAB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BA2218247047C200A8EEAB /* SceneDelegate.swift */; };
 		E1BA221B247047C200A8EEAB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BA221A247047C200A8EEAB /* ViewController.swift */; };
 		E1BA221E247047C200A8EEAB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1BA221C247047C200A8EEAB /* Main.storyboard */; };
 		E1BA2220247047DE00A8EEAB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1BA221F247047DE00A8EEAB /* Assets.xcassets */; };
 		E1BA2223247047DE00A8EEAB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1BA2221247047DE00A8EEAB /* LaunchScreen.storyboard */; };
+		E1BA222B247085BA00A8EEAB /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = E1BA222A247085BA00A8EEAB /* .gitignore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		423C97F00D141C852F5F2067 /* Pods_webClientForCheckers.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_webClientForCheckers.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		82E3DDA12B8FEC1877DD59A2 /* Pods-webClientForCheckers.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-webClientForCheckers.release.xcconfig"; path = "Target Support Files/Pods-webClientForCheckers/Pods-webClientForCheckers.release.xcconfig"; sourceTree = "<group>"; };
 		E1BA2213247047C200A8EEAB /* webClientForCheckers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = webClientForCheckers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1BA2216247047C200A8EEAB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1BA2218247047C200A8EEAB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +28,8 @@
 		E1BA221F247047DE00A8EEAB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E1BA2222247047DE00A8EEAB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E1BA2224247047DE00A8EEAB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E1BA222A247085BA00A8EEAB /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		FEBD4B882E3067C7B58A9AC1 /* Pods-webClientForCheckers.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-webClientForCheckers.debug.xcconfig"; path = "Target Support Files/Pods-webClientForCheckers/Pods-webClientForCheckers.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +37,38 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3258646D94FBF8078B4CBA07 /* Pods_webClientForCheckers.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E9021C767B8B92565307BA9 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				FEBD4B882E3067C7B58A9AC1 /* Pods-webClientForCheckers.debug.xcconfig */,
+				82E3DDA12B8FEC1877DD59A2 /* Pods-webClientForCheckers.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		45E1404437EFB7327424BA4F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				423C97F00D141C852F5F2067 /* Pods_webClientForCheckers.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		E1BA220A247047C200A8EEAB = {
 			isa = PBXGroup;
 			children = (
+				E1BA222A247085BA00A8EEAB /* .gitignore */,
 				E1BA2215247047C200A8EEAB /* webClientForCheckers */,
 				E1BA2214247047C200A8EEAB /* Products */,
+				0E9021C767B8B92565307BA9 /* Pods */,
+				45E1404437EFB7327424BA4F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -74,9 +101,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E1BA2227247047DE00A8EEAB /* Build configuration list for PBXNativeTarget "webClientForCheckers" */;
 			buildPhases = (
+				F84E827E187E0F6A70013702 /* [CP] Check Pods Manifest.lock */,
 				E1BA220F247047C200A8EEAB /* Sources */,
 				E1BA2210247047C200A8EEAB /* Frameworks */,
 				E1BA2211247047C200A8EEAB /* Resources */,
+				4FE3B3EB720DE12F9A6E795F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -125,6 +154,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1BA222B247085BA00A8EEAB /* .gitignore in Resources */,
 				E1BA2223247047DE00A8EEAB /* LaunchScreen.storyboard in Resources */,
 				E1BA2220247047DE00A8EEAB /* Assets.xcassets in Resources */,
 				E1BA221E247047C200A8EEAB /* Main.storyboard in Resources */,
@@ -132,6 +162,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4FE3B3EB720DE12F9A6E795F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-webClientForCheckers/Pods-webClientForCheckers-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-webClientForCheckers/Pods-webClientForCheckers-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-webClientForCheckers/Pods-webClientForCheckers-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F84E827E187E0F6A70013702 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-webClientForCheckers-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E1BA220F247047C200A8EEAB /* Sources */ = {
@@ -282,6 +354,7 @@
 		};
 		E1BA2228247047DE00A8EEAB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FEBD4B882E3067C7B58A9AC1 /* Pods-webClientForCheckers.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -299,6 +372,7 @@
 		};
 		E1BA2229247047DE00A8EEAB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 82E3DDA12B8FEC1877DD59A2 /* Pods-webClientForCheckers.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
