@@ -7,22 +7,35 @@ import SocketIO
 
 //https://shahaf-mezin-chat-nodejs.herokuapp.com
 class ViewController: UIViewController {
-    let myUrl = "http://localhost:3000"
+    let myUrl = "http://localhost:3000/users"
+    var me: [String: Any] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        httpPost()
+        let user: [String: Any] = ["userName": "liat580",
+                    "password": "abcd1234"]
+        login(user)
+        do {
+            sleep(5)
+        }
+        logout()
+   //     getUserByUserName("liat530")
     }
     
     
-    func httpGet () {
+    func getUserByUserName (_ userName: String) {
         // Create URL
-        let url = URL(string: myUrl)
+        let url = URL(string: "http://localhost:3000/users/:liat510")
         guard let requestUrl = url else { fatalError() }
         // Create URL Request
         var request = URLRequest(url: requestUrl)
         // Specify HTTP Method to use
         request.httpMethod = "GET"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
+       
+    
         // Send HTTP Request
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             
@@ -43,10 +56,11 @@ class ViewController: UIViewController {
             }
             
         }
+        
         task.resume()
     }
     
-    func httpPost () {
+    func createUser (_ user: [String: Any]) {
         // Prepare URL
         let url = URL(string: "http://localhost:3000/users")
         guard let requestUrl = url else { fatalError() }
@@ -56,13 +70,9 @@ class ViewController: UIViewController {
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
-        // HTTP Request Parameters which will be sent in HTTP Request Body
-        let json: [String: Any] = ["userName": "reef123",
-                                   "password": "abcd1234",
-                                   "wins": 100]
        
         
-        let jsonData = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
+        let jsonData = try? JSONSerialization.data(withJSONObject: user, options: .prettyPrinted)
         
         // Set HTTP Request Body
         request.httpBody = jsonData
@@ -74,15 +84,80 @@ class ViewController: UIViewController {
                     print("Error took place \(error)")
                     return
                 }
-         
                 let responseJSON = try? JSONSerialization.jsonObject(with: data!, options: [])
                     if let responseJSON = responseJSON as? [String: Any] {
-                        print(responseJSON)
+                        self.me = responseJSON
+                        print("Created:", responseJSON)
                     }
         }
         task.resume()
     }
- 
+    
+    func login (_ user: [String: Any]) {
+        // Prepare URL
+        let url = URL(string: "http://localhost:3000/users/login")
+        guard let requestUrl = url else { fatalError() }
+
+        // Prepare URL Request Object
+        var request = URLRequest(url: requestUrl)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+       
+        
+        let jsonData = try? JSONSerialization.data(withJSONObject: user, options: .prettyPrinted)
+        
+        // Set HTTP Request Body
+        request.httpBody = jsonData
+                
+        // Perform HTTP Request
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                // Check for Error
+                if let error = error {
+                    print("Error took place \(error)")
+                    return
+                }
+                let responseJSON = try? JSONSerialization.jsonObject(with: data!, options: [])
+                    if let responseJSON = responseJSON as? [String: Any] {
+                        self.me = responseJSON
+                        print("Login: ", responseJSON)
+                    }
+        }
+        task.resume()
+    }
+    
+    func logout () {
+        // Prepare URL
+        let url = URL(string: "http://localhost:3000/users/logout")
+        guard let requestUrl = url else { fatalError() }
+
+        // Prepare URL Request Object
+        var request = URLRequest(url: requestUrl)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+       
+
+        let jsonData = try? JSONSerialization.data(withJSONObject: self.me, options: .prettyPrinted)
+
+        // Set HTTP Request Body
+        request.httpBody = jsonData
+                
+        // Perform HTTP Request
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                // Check for Error
+                if let error = error {
+                    print("Error took place \(error)")
+                    return
+                }
+                let responseJSON = try? JSONSerialization.jsonObject(with: data!, options: [])
+                    if let responseJSON = responseJSON as? [String: Any] {
+                        print("Logout: ", responseJSON)
+                    }
+        }
+        task.resume()
+    }
+    
 }
 
 
