@@ -9,19 +9,28 @@ import SocketIO
 class ViewController: UIViewController {
     let myUrl = "http://localhost:3000/users"
     var me: [String: Any] = [:]
+    let user: [String: Any] = ["userName": "liat590",
+                               "password": "abcd1234"]
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let user: [String: Any] = ["userName": "liat580",
-                    "password": "abcd1234"]
+       
         login(user)
         do {
             sleep(5)
         }
-        logout()
+    //    logout()
    //     getUserByUserName("liat530")
     }
     
+    
+    @IBAction func LogoutFunc(_ sender: Any) {
+        self.logout()
+    }
+    @IBAction func LoginFunc(_ sender: Any) {
+        self.login(user)
+    }
     
     func getUserByUserName (_ userName: String) {
         // Create URL
@@ -137,7 +146,6 @@ class ViewController: UIViewController {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
        
-
         let jsonData = try? JSONSerialization.data(withJSONObject: self.me, options: .prettyPrinted)
 
         // Set HTTP Request Body
@@ -158,15 +166,14 @@ class ViewController: UIViewController {
         task.resume()
     }
     
-}
-
-
-
-/*
-   /*
+    @IBAction func socketButton(_ sender: Any) {
+        socketConnect()
+    }
+    
+    func socketConnect () {
        let manager = SocketManager(socketURL: URL(string: "http://localhost:3000")!, config: [.log(false)])
        let socket = manager.defaultSocket
-       
+     
        socket.on(clientEvent: .connect) {data, ack in
            print("----------socket connected------------")
            socket.emit("hello", "Im connected")
@@ -175,5 +182,6 @@ class ViewController: UIViewController {
            print(data.description)
        }
        socket.connect()
-        */
- */
+    }
+
+}
