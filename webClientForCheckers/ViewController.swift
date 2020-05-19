@@ -11,17 +11,13 @@ class ViewController: UIViewController {
     var me: [String: Any] = [:]
     let user: [String: Any] = ["userName": "liat590",
                                "password": "abcd1234"]
+    let manager = SocketManager(socketURL: URL(string: "http://localhost:3000")!, config: [.log(false), .compress])
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
-    //    login(user)
-        do {
-            sleep(5)
-        }
-    //    logout()
-   //     getUserByUserName("liat530")
+        socketConnect()
     }
     
     
@@ -147,7 +143,7 @@ class ViewController: UIViewController {
         request.addValue("application/json", forHTTPHeaderField: "Accept")
        
         let jsonData = try? JSONSerialization.data(withJSONObject: self.me, options: .prettyPrinted)
-
+        self.me = [:]
         // Set HTTP Request Body
         request.httpBody = jsonData
                 
@@ -167,26 +163,26 @@ class ViewController: UIViewController {
     }
     
     @IBAction func socketButton(_ sender: Any) {
-        socketConnect()
+        enterIdleUsersRoom()
     }
     
     func socketConnect () {
-       
-        let manager = SocketManager(socketURL: URL(string: "http://localhost:3000")!, config: [.log(false), .compress])
         let socket = manager.defaultSocket
-
-        socket.on("connect") {data, ack in
+         socket.on("connect") {data, ack in
             print("socket connected")
-            socket.emit("hello", "connected!!!!")
+            socket.emit("hello", "iOS client says: connected")
         }
 
         socket.on("hello") {data, ack in
-            print(data[0] as! String)
+            print(data[0])// as! String)
         }
         socket.connect()
       
-        CFRunLoopRun()
-        
+     //   CFRunLoopRun()
     }
-
+    
+    func enterIdleUsersRoom () {
+        let socket = manager.defaultSocket
+        socket.emit("enterAsIdlePlayer",self.me)
+    }
 }
