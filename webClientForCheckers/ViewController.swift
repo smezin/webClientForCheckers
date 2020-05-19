@@ -174,7 +174,7 @@ class ViewController: UIViewController {
         }
 
         socket.on("hello") {data, ack in
-            print(data[0])// as! String)
+            print(data[0])
         }
         socket.connect()
       
