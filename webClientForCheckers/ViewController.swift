@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
        
-        login(user)
+    //    login(user)
         do {
             sleep(5)
         }
@@ -171,17 +171,22 @@ class ViewController: UIViewController {
     }
     
     func socketConnect () {
-       let manager = SocketManager(socketURL: URL(string: "http://localhost:3000")!, config: [.log(false)])
-       let socket = manager.defaultSocket
-     
-       socket.on(clientEvent: .connect) {data, ack in
-           print("----------socket connected------------")
-           socket.emit("hello", "Im connected")
-       }
-       socket.on("hello") {data, ack in
-           print(data.description)
-       }
-       socket.connect()
+       
+        let manager = SocketManager(socketURL: URL(string: "http://localhost:3000")!, config: [.log(false), .compress])
+        let socket = manager.defaultSocket
+
+        socket.on("connect") {data, ack in
+            print("socket connected")
+            socket.emit("hello", "connected!!!!")
+        }
+
+        socket.on("hello") {data, ack in
+            print(data[0] as! String)
+        }
+        socket.connect()
+      
+        CFRunLoopRun()
+        
     }
 
 }

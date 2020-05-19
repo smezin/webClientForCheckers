@@ -15,6 +15,7 @@
 		E1BA2220247047DE00A8EEAB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1BA221F247047DE00A8EEAB /* Assets.xcassets */; };
 		E1BA2223247047DE00A8EEAB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1BA2221247047DE00A8EEAB /* LaunchScreen.storyboard */; };
 		E1BA222B247085BA00A8EEAB /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = E1BA222A247085BA00A8EEAB /* .gitignore */; };
+		E1BA222D247325A000A8EEAB /* SocketIOManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BA222C247325A000A8EEAB /* SocketIOManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		E1BA2222247047DE00A8EEAB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E1BA2224247047DE00A8EEAB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E1BA222A247085BA00A8EEAB /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		E1BA222C247325A000A8EEAB /* SocketIOManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketIOManager.swift; sourceTree = "<group>"; };
 		FEBD4B882E3067C7B58A9AC1 /* Pods-webClientForCheckers.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-webClientForCheckers.debug.xcconfig"; path = "Target Support Files/Pods-webClientForCheckers/Pods-webClientForCheckers.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -86,6 +88,7 @@
 				E1BA2216247047C200A8EEAB /* AppDelegate.swift */,
 				E1BA2218247047C200A8EEAB /* SceneDelegate.swift */,
 				E1BA221A247047C200A8EEAB /* ViewController.swift */,
+				E1BA222C247325A000A8EEAB /* SocketIOManager.swift */,
 				E1BA221C247047C200A8EEAB /* Main.storyboard */,
 				E1BA221F247047DE00A8EEAB /* Assets.xcassets */,
 				E1BA2221247047DE00A8EEAB /* LaunchScreen.storyboard */,
@@ -210,6 +213,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1BA222D247325A000A8EEAB /* SocketIOManager.swift in Sources */,
 				E1BA221B247047C200A8EEAB /* ViewController.swift in Sources */,
 				E1BA2217247047C200A8EEAB /* AppDelegate.swift in Sources */,
 				E1BA2219247047C200A8EEAB /* SceneDelegate.swift in Sources */,
