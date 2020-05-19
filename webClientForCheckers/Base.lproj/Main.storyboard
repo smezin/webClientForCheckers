@@ -15,38 +15,65 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GZ5-CS-8GX">
-                                <rect key="frame" x="183" y="239" width="48" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GZ5-CS-8GX">
+                                <rect key="frame" x="180" y="107" width="48" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="QC4-hD-9KU"/>
+                                </constraints>
                                 <state key="normal" title="Logout"/>
                                 <connections>
                                     <action selector="LogoutFunc:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yGD-S4-Kx2"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c6t-TG-aGa">
-                                <rect key="frame" x="189" y="337" width="38" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c6t-TG-aGa">
+                                <rect key="frame" x="185" y="153" width="38" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="XPg-TC-fEs"/>
+                                </constraints>
                                 <state key="normal" title="Login"/>
                                 <connections>
                                     <action selector="LoginFunc:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4vq-EB-xrs"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tSG-M6-fn7">
-                                <rect key="frame" x="180" y="433" width="48" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tSG-M6-fn7">
+                                <rect key="frame" x="180" y="191" width="48" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="cxT-LQ-Bhe"/>
+                                </constraints>
                                 <state key="normal" title="Socket"/>
                                 <connections>
                                     <action selector="socketButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XBV-jW-eZf"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TLs-Nz-6hF">
+                                <rect key="frame" x="20" y="296" width="374" height="431"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="TLs-Nz-6hF" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="17s-nA-UXm"/>
+                            <constraint firstItem="c6t-TG-aGa" firstAttribute="top" secondItem="GZ5-CS-8GX" secondAttribute="bottom" constant="16" id="DKo-iX-5VP"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="TLs-Nz-6hF" secondAttribute="bottom" constant="135" id="FDG-X4-KfR"/>
+                            <constraint firstItem="GZ5-CS-8GX" firstAttribute="leading" secondItem="tSG-M6-fn7" secondAttribute="leading" id="K58-yR-vmH"/>
+                            <constraint firstItem="GZ5-CS-8GX" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="180" id="KQX-c3-tYG"/>
+                            <constraint firstItem="TLs-Nz-6hF" firstAttribute="top" secondItem="tSG-M6-fn7" secondAttribute="bottom" constant="75" id="KXT-Tb-lHe"/>
+                            <constraint firstItem="GZ5-CS-8GX" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="63" id="LgK-eb-EUC"/>
+                            <constraint firstItem="TLs-Nz-6hF" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="PQC-rf-99S"/>
+                            <constraint firstItem="c6t-TG-aGa" firstAttribute="centerX" secondItem="tSG-M6-fn7" secondAttribute="centerX" id="trv-e9-NX1"/>
+                            <constraint firstItem="tSG-M6-fn7" firstAttribute="top" secondItem="c6t-TG-aGa" secondAttribute="bottom" constant="8" id="xbT-fh-8e5"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="mainLabel" destination="TLs-Nz-6hF" id="SLa-fj-v2c"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="133" y="100"/>
+            <point key="canvasLocation" x="131.8840579710145" y="99.776785714285708"/>
         </scene>
     </scenes>
 </document>

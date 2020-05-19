@@ -4,6 +4,7 @@
 
 import UIKit
 import SocketIO
+import Foundation
 
 //https://shahaf-mezin-chat-nodejs.herokuapp.com
 class ViewController: UIViewController {
@@ -13,6 +14,7 @@ class ViewController: UIViewController {
                                "password": "abcd1234"]
     let manager = SocketManager(socketURL: URL(string: "http://localhost:3000")!, config: [.log(false), .compress])
     
+    @IBOutlet weak var mainLabel: UILabel!
     
     
     override func viewDidLoad() {
@@ -59,9 +61,7 @@ class ViewController: UIViewController {
             if let data = data, let dataString = String(data: data, encoding: .utf8) {
                 print("Response data string:\n \(dataString)")
             }
-            
         }
-        
         task.resume()
     }
     
@@ -84,19 +84,19 @@ class ViewController: UIViewController {
                 
         // Perform HTTP Request
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-                // Check for Error
-                if let error = error {
-                    print("Error took place \(error)")
-                    return
+            // Check for Error
+            if let error = error {
+                print("Error took place \(error)")
+                return
+            }
+            let responseJSON = try? JSONSerialization.jsonObject(with: data!, options: [])
+                if let responseJSON = responseJSON as? [String: Any] {
+                    self.me = responseJSON
+                    print("Created:", responseJSON)
                 }
-                let responseJSON = try? JSONSerialization.jsonObject(with: data!, options: [])
-                    if let responseJSON = responseJSON as? [String: Any] {
-                        self.me = responseJSON
-                        print("Created:", responseJSON)
-                    }
+            }
+            task.resume()
         }
-        task.resume()
-    }
     
     func login (_ user: [String: Any]) {
         // Prepare URL
@@ -117,16 +117,16 @@ class ViewController: UIViewController {
                 
         // Perform HTTP Request
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-                // Check for Error
-                if let error = error {
-                    print("Error took place \(error)")
-                    return
+            // Check for Error
+            if let error = error {
+                print("Error took place \(error)")
+                return
+            }
+            let responseJSON = try? JSONSerialization.jsonObject(with: data!, options: [])
+                if let responseJSON = responseJSON as? [String: Any] {
+                    self.me = responseJSON
+                    print("Login: ", responseJSON)
                 }
-                let responseJSON = try? JSONSerialization.jsonObject(with: data!, options: [])
-                    if let responseJSON = responseJSON as? [String: Any] {
-                        self.me = responseJSON
-                        print("Login: ", responseJSON)
-                    }
         }
         task.resume()
     }
@@ -149,15 +149,15 @@ class ViewController: UIViewController {
                 
         // Perform HTTP Request
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-                // Check for Error
-                if let error = error {
-                    print("Error took place \(error)")
-                    return
+            // Check for Error
+            if let error = error {
+                print("Error took place \(error)")
+                return
+            }
+            let responseJSON = try? JSONSerialization.jsonObject(with: data!, options: [])
+                if let responseJSON = responseJSON as? [String: Any] {
+                    print("Logout: ", responseJSON)
                 }
-                let responseJSON = try? JSONSerialization.jsonObject(with: data!, options: [])
-                    if let responseJSON = responseJSON as? [String: Any] {
-                        print("Logout: ", responseJSON)
-                    }
         }
         task.resume()
     }
