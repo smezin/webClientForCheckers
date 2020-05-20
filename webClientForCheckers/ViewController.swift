@@ -7,9 +7,12 @@ import SocketIO
 import Foundation
 
 class ViewController: UIViewController {
-    let myUrl = "http://localhost:3000/users"
     var me: [String: Any] = [:]
-    let user: [String: Any] = ["userName": "iPhoneSE",
+    let scheme = "http"
+    let port = 3000
+    let host = "localhost"
+    
+    let user: [String: Any] = ["userName": "iPhone11pro",
                                "password": "abcd1234"]
     let manager = SocketManager(socketURL: URL(string: "http://localhost:3000")!, config: [.log(false), .compress])
     
@@ -95,22 +98,12 @@ class ViewController: UIViewController {
         }
     
     func login (_ user: [String: Any]) {
-        // Prepare URL
-        let url = URL(string: "http://localhost:3000/users/login")
-        guard let requestUrl = url else { fatalError() }
 
-        // Prepare URL Request Object
-        var request = URLRequest(url: requestUrl)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-       
+        let url = self.setURLWithPath(path: "/users/login")
+        var request = self.setRequestTypeWithHeaders(method: "POST", url: url)
         let jsonData = try? JSONSerialization.data(withJSONObject: user, options: .prettyPrinted)
-        
-        // Set HTTP Request Body
         request.httpBody = jsonData
-                
-        // Perform HTTP Request
+
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             if let error = error {
                 print("Error took place \(error)")
@@ -130,18 +123,12 @@ class ViewController: UIViewController {
     }
     
     func logout () {
-        // Prepare URL
-        let url = URL(string: "http://localhost:3000/users/logout")
-        guard let requestUrl = url else { fatalError() }
-
-        var request = URLRequest(url: requestUrl)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-       
+ 
+        let url = self.setURLWithPath(path: "/users/logout")
+        var request = self.setRequestTypeWithHeaders(method: "POST", url: url)
         let jsonData = try? JSONSerialization.data(withJSONObject: self.me, options: .prettyPrinted)
         self.me = [:]
-        // Set HTTP Request Body
+
         request.httpBody = jsonData
                 
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -173,9 +160,10 @@ class ViewController: UIViewController {
             socket.emit("hello", "iOS client says: connected")
         }
 
-        socket.on("hello") {data, ack in
-            print("from emit hello", data[0])
+        socket.on("IdlePlayers") {data, ack in
+            print("players in the room:", data[0])
         }
+        
         socket.connect()
      //   CFRunLoopRun()
     }
@@ -183,9 +171,9 @@ class ViewController: UIViewController {
     func enterIdleUsersRoom () {
         let socket = manager.defaultSocket
         socket.emit("enterAsIdlePlayer",self.me)
-        print("thats me", self.me)
     }
     
+    //utility funcs
     func stringify (json:[String: Any]) -> String {
         var convertedString:String = ""
         do {
@@ -195,5 +183,20 @@ class ViewController: UIViewController {
                   print("from stringify", myJSONError)
               }
         return convertedString
+    }
+    func setURLWithPath (path:String) -> URL {
+        var components = URLComponents()
+        components.scheme = scheme
+        components.host = host
+        components.port = port
+        components.path = path
+        return components.url!
+    }
+    func setRequestTypeWithHeaders (method:String, url:URL) ->URLRequest {
+        var request = URLRequest(url: url)
+        request.httpMethod = method
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        return request
     }
 }
