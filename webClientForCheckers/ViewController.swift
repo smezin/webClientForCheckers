@@ -6,20 +6,20 @@ import UIKit
 import SocketIO
 import Foundation
 
-//https://shahaf-mezin-chat-nodejs.herokuapp.com
 class ViewController: UIViewController {
     let myUrl = "http://localhost:3000/users"
     var me: [String: Any] = [:]
-    let user: [String: Any] = ["userName": "liat590",
+    let user: [String: Any] = ["userName": "iPhoneSE",
                                "password": "abcd1234"]
     let manager = SocketManager(socketURL: URL(string: "http://localhost:3000")!, config: [.log(false), .compress])
     
-    @IBOutlet weak var mainLabel: UILabel!
+    @IBOutlet weak var outputText: UITextView!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         socketConnect()
+  //      self.createUser(user)
     }
     
     
@@ -41,23 +41,17 @@ class ViewController: UIViewController {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         
-       
-    
-        // Send HTTP Request
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            
-            // Check if Error took place
+
             if let error = error {
                 print("Error took place \(error)")
                 return
             }
             
-            // Read HTTP Response Status code
             if let response = response as? HTTPURLResponse {
                 print("Response HTTP Status code: \(response.statusCode)")
             }
-            
-            // Convert HTTP Response Data to a simple String
+
             if let data = data, let dataString = String(data: data, encoding: .utf8) {
                 print("Response data string:\n \(dataString)")
             }
@@ -78,8 +72,6 @@ class ViewController: UIViewController {
        
         
         let jsonData = try? JSONSerialization.data(withJSONObject: user, options: .prettyPrinted)
-        
-        // Set HTTP Request Body
         request.httpBody = jsonData
                 
         // Perform HTTP Request
@@ -92,7 +84,11 @@ class ViewController: UIViewController {
             let responseJSON = try? JSONSerialization.jsonObject(with: data!, options: [])
                 if let responseJSON = responseJSON as? [String: Any] {
                     self.me = responseJSON
-                    print("Created:", responseJSON)
+                    let response = self.stringify(json: responseJSON)
+                    DispatchQueue.main.async {
+                        self.outputText.text = response
+                        print("from createUser: ", response)
+                    }
                 }
             }
             task.resume()
@@ -109,7 +105,6 @@ class ViewController: UIViewController {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
        
-        
         let jsonData = try? JSONSerialization.data(withJSONObject: user, options: .prettyPrinted)
         
         // Set HTTP Request Body
@@ -117,7 +112,6 @@ class ViewController: UIViewController {
                 
         // Perform HTTP Request
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            // Check for Error
             if let error = error {
                 print("Error took place \(error)")
                 return
@@ -125,7 +119,11 @@ class ViewController: UIViewController {
             let responseJSON = try? JSONSerialization.jsonObject(with: data!, options: [])
                 if let responseJSON = responseJSON as? [String: Any] {
                     self.me = responseJSON
-                    print("Login: ", responseJSON)
+                    let response = self.stringify(json: responseJSON)
+                    DispatchQueue.main.async {
+                        self.outputText.text = response
+                        print("from login: ", response)
+                    }
                 }
         }
         task.resume()
@@ -136,7 +134,6 @@ class ViewController: UIViewController {
         let url = URL(string: "http://localhost:3000/users/logout")
         guard let requestUrl = url else { fatalError() }
 
-        // Prepare URL Request Object
         var request = URLRequest(url: requestUrl)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -147,22 +144,25 @@ class ViewController: UIViewController {
         // Set HTTP Request Body
         request.httpBody = jsonData
                 
-        // Perform HTTP Request
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            // Check for Error
             if let error = error {
                 print("Error took place \(error)")
                 return
             }
             let responseJSON = try? JSONSerialization.jsonObject(with: data!, options: [])
                 if let responseJSON = responseJSON as? [String: Any] {
-                    print("Logout: ", responseJSON)
+                    let response = self.stringify(json: responseJSON)
+                    DispatchQueue.main.async {
+                        self.outputText.text = response
+                        print("from logout: ", response)
+                    }
                 }
         }
         task.resume()
     }
     
     @IBAction func socketButton(_ sender: Any) {
+        print("me: ", self.me)
         enterIdleUsersRoom()
     }
     
@@ -174,15 +174,26 @@ class ViewController: UIViewController {
         }
 
         socket.on("hello") {data, ack in
-            print(data[0])
+            print("from emit hello", data[0])
         }
         socket.connect()
-      
      //   CFRunLoopRun()
     }
     
     func enterIdleUsersRoom () {
         let socket = manager.defaultSocket
         socket.emit("enterAsIdlePlayer",self.me)
+        print("thats me", self.me)
+    }
+    
+    func stringify (json:[String: Any]) -> String {
+        var convertedString:String = ""
+        do {
+            let data1 =  try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
+            convertedString = String(data: data1, encoding: String.Encoding.utf8) ?? "Conversion error"
+              } catch let myJSONError {
+                  print("from stringify", myJSONError)
+              }
+        return convertedString
     }
 }
