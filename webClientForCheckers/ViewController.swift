@@ -12,7 +12,7 @@ class ViewController: UIViewController {
     let port = 3000
     let host = "localhost"
     
-    let user: [String: Any] = ["userName": "iPhoneSE",
+    let user: [String: Any] = ["userName": "iPhone11pro",
                                "password": "abcd1234"]
     let manager = SocketManager(socketURL: URL(string: "http://localhost:3000")!, config: [.log(false), .compress])
     
@@ -129,8 +129,10 @@ class ViewController: UIViewController {
         }
         socket.on("reply") {data, ack in
             print("msg from any:", data[0])
+            DispatchQueue.main.async {
+                self.outputText.text = data[0] as? String
+            }
         }
-        
         socket.connect()
      //   CFRunLoopRun()
     }
@@ -141,7 +143,7 @@ class ViewController: UIViewController {
     }
     func emitToOther () {
         let socket = manager.defaultSocket
-        socket.emit("play",[self.me, "hello from myself"])
+        socket.emit("play",[self.me, "hello from 11pro"])
     }
    
     
