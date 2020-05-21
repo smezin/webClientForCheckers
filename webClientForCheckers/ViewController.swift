@@ -12,7 +12,7 @@ class ViewController: UIViewController {
     let port = 3000
     let host = "localhost"
     
-    let user: [String: Any] = ["userName": "iPhone11pro",
+    let user: [String: Any] = ["userName": "iPhoneSE",
                                "password": "abcd1234"]
     let manager = SocketManager(socketURL: URL(string: "http://localhost:3000")!, config: [.log(false), .compress])
     
@@ -32,48 +32,14 @@ class ViewController: UIViewController {
     @IBAction func LoginFunc(_ sender: Any) {
         self.login(user)
     }
-    
-    func getUserByUserName (_ userName: String) {
-        // Create URL
-        let url = URL(string: "http://localhost:3000/users/:liat510")
-        guard let requestUrl = url else { fatalError() }
-        // Create URL Request
-        var request = URLRequest(url: requestUrl)
-        // Specify HTTP Method to use
-        request.httpMethod = "GET"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-
-            if let error = error {
-                print("Error took place \(error)")
-                return
-            }
-            
-            if let response = response as? HTTPURLResponse {
-                print("Response HTTP Status code: \(response.statusCode)")
-            }
-
-            if let data = data, let dataString = String(data: data, encoding: .utf8) {
-                print("Response data string:\n \(dataString)")
-            }
-        }
-        task.resume()
+    @IBAction func toSE(_ sender: Any) {
+        self.emitToOther()
     }
     
     func createUser (_ user: [String: Any]) {
-        // Prepare URL
-        let url = URL(string: "http://localhost:3000/users")
-        guard let requestUrl = url else { fatalError() }
-
-        // Prepare URL Request Object
-        var request = URLRequest(url: requestUrl)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-       
         
+        let url = self.setURLWithPath(path: "/users")
+        var request = self.setRequestTypeWithHeaders(method: "POST", url: url)
         let jsonData = try? JSONSerialization.data(withJSONObject: user, options: .prettyPrinted)
         request.httpBody = jsonData
                 
@@ -149,7 +115,6 @@ class ViewController: UIViewController {
     }
     
     @IBAction func socketButton(_ sender: Any) {
-        print("me: ", self.me)
         enterIdleUsersRoom()
     }
     
@@ -159,9 +124,11 @@ class ViewController: UIViewController {
             print("socket connected")
             socket.emit("hello", "iOS client says: connected")
         }
-
         socket.on("IdlePlayers") {data, ack in
             print("players in the room:", data[0])
+        }
+        socket.on("reply") {data, ack in
+            print("msg from any:", data[0])
         }
         
         socket.connect()
@@ -172,8 +139,14 @@ class ViewController: UIViewController {
         let socket = manager.defaultSocket
         socket.emit("enterAsIdlePlayer",self.me)
     }
+    func emitToOther () {
+        let socket = manager.defaultSocket
+        socket.emit("play",[self.me, "hello from myself"])
+    }
+   
     
-    //utility funcs
+                                            //utility funcs//
+    
     func stringify (json:[String: Any]) -> String {
         var convertedString:String = ""
         do {
@@ -192,7 +165,7 @@ class ViewController: UIViewController {
         components.path = path
         return components.url!
     }
-    func setRequestTypeWithHeaders (method:String, url:URL) ->URLRequest {
+    func setRequestTypeWithHeaders (method:String, url:URL) -> URLRequest {
         var request = URLRequest(url: url)
         request.httpMethod = method
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -200,3 +173,36 @@ class ViewController: UIViewController {
         return request
     }
 }
+
+/*
+ 
+   func getUserByUserName (_ userName: String) {
+       // Create URL
+       let url = URL(string: "http://localhost:3000/users/:liat510")
+       guard let requestUrl = url else { fatalError() }
+       // Create URL Request
+       var request = URLRequest(url: requestUrl)
+       // Specify HTTP Method to use
+       request.httpMethod = "GET"
+       request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+       request.addValue("application/json", forHTTPHeaderField: "Accept")
+       
+       let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+
+           if let error = error {
+               print("Error took place \(error)")
+               return
+           }
+           
+           if let response = response as? HTTPURLResponse {
+               print("Response HTTP Status code: \(response.statusCode)")
+           }
+
+           if let data = data, let dataString = String(data: data, encoding: .utf8) {
+               print("Response data string:\n \(dataString)")
+           }
+       }
+       task.resume()
+   }
+   
+ */
