@@ -6,8 +6,9 @@ import UIKit
 import SocketIO
 import Foundation
 
-class ViewController: UIViewController {
+class ConnectViewController: UIViewController {
     var me: [String: Any] = [:]
+    var idlePlayers:[[String:Any]] = []
     let scheme = "http"
     let port = 3000
     let host = "localhost"
@@ -125,7 +126,8 @@ class ViewController: UIViewController {
             socket.emit("hello", "iOS client says: connected")
         }
         socket.on("IdlePlayers") {data, ack in
-            print("players in the room:", data[0])
+            self.idlePlayers = data[0] as! [[String : Any]]
+            print("players in the room:", self.idlePlayers)
         }
         socket.on("reply") {data, ack in
             print("msg from any:", data[0])
@@ -139,11 +141,15 @@ class ViewController: UIViewController {
     
     func enterIdleUsersRoom () {
         let socket = manager.defaultSocket
-        socket.emit("enterAsIdlePlayer",self.me)
+        socket.emit("enterAsIdlePlayer", self.me)
     }
     func emitToOther () {
         let socket = manager.defaultSocket
         socket.emit("play",[self.me, "hello from 11pro"])
+    }
+    func getIdleUsers () {
+        let socket = manager.defaultSocket
+        socket.emit("getIdlePlayers", self.me)
     }
    
     
@@ -173,6 +179,11 @@ class ViewController: UIViewController {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         return request
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC:PlayersViewController = segue.destination as! PlayersViewController
+        destinationVC.playersFullDescription = self.idlePlayers
     }
 }
 

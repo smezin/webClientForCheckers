@@ -8,29 +8,29 @@
 
 /* Begin PBXBuildFile section */
 		3258646D94FBF8078B4CBA07 /* Pods_webClientForCheckers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 423C97F00D141C852F5F2067 /* Pods_webClientForCheckers.framework */; };
+		E1195B472477C69200787C18 /* PlayersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1195B462477C69200787C18 /* PlayersViewController.swift */; };
 		E1BA2217247047C200A8EEAB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BA2216247047C200A8EEAB /* AppDelegate.swift */; };
 		E1BA2219247047C200A8EEAB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BA2218247047C200A8EEAB /* SceneDelegate.swift */; };
-		E1BA221B247047C200A8EEAB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BA221A247047C200A8EEAB /* ViewController.swift */; };
+		E1BA221B247047C200A8EEAB /* ConnectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BA221A247047C200A8EEAB /* ConnectViewController.swift */; };
 		E1BA221E247047C200A8EEAB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1BA221C247047C200A8EEAB /* Main.storyboard */; };
 		E1BA2220247047DE00A8EEAB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1BA221F247047DE00A8EEAB /* Assets.xcassets */; };
 		E1BA2223247047DE00A8EEAB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1BA2221247047DE00A8EEAB /* LaunchScreen.storyboard */; };
 		E1BA222B247085BA00A8EEAB /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = E1BA222A247085BA00A8EEAB /* .gitignore */; };
-		E1BA222D247325A000A8EEAB /* SocketIOManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BA222C247325A000A8EEAB /* SocketIOManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		423C97F00D141C852F5F2067 /* Pods_webClientForCheckers.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_webClientForCheckers.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		82E3DDA12B8FEC1877DD59A2 /* Pods-webClientForCheckers.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-webClientForCheckers.release.xcconfig"; path = "Target Support Files/Pods-webClientForCheckers/Pods-webClientForCheckers.release.xcconfig"; sourceTree = "<group>"; };
+		E1195B462477C69200787C18 /* PlayersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayersViewController.swift; sourceTree = "<group>"; };
 		E1BA2213247047C200A8EEAB /* webClientForCheckers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = webClientForCheckers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1BA2216247047C200A8EEAB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1BA2218247047C200A8EEAB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		E1BA221A247047C200A8EEAB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E1BA221A247047C200A8EEAB /* ConnectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectViewController.swift; sourceTree = "<group>"; };
 		E1BA221D247047C200A8EEAB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E1BA221F247047DE00A8EEAB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E1BA2222247047DE00A8EEAB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E1BA2224247047DE00A8EEAB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E1BA222A247085BA00A8EEAB /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		E1BA222C247325A000A8EEAB /* SocketIOManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketIOManager.swift; sourceTree = "<group>"; };
 		FEBD4B882E3067C7B58A9AC1 /* Pods-webClientForCheckers.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-webClientForCheckers.debug.xcconfig"; path = "Target Support Files/Pods-webClientForCheckers/Pods-webClientForCheckers.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -86,9 +86,9 @@
 			isa = PBXGroup;
 			children = (
 				E1BA2216247047C200A8EEAB /* AppDelegate.swift */,
+				E1195B462477C69200787C18 /* PlayersViewController.swift */,
 				E1BA2218247047C200A8EEAB /* SceneDelegate.swift */,
-				E1BA221A247047C200A8EEAB /* ViewController.swift */,
-				E1BA222C247325A000A8EEAB /* SocketIOManager.swift */,
+				E1BA221A247047C200A8EEAB /* ConnectViewController.swift */,
 				E1BA221C247047C200A8EEAB /* Main.storyboard */,
 				E1BA221F247047DE00A8EEAB /* Assets.xcassets */,
 				E1BA2221247047DE00A8EEAB /* LaunchScreen.storyboard */,
@@ -213,9 +213,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E1BA222D247325A000A8EEAB /* SocketIOManager.swift in Sources */,
-				E1BA221B247047C200A8EEAB /* ViewController.swift in Sources */,
+				E1BA221B247047C200A8EEAB /* ConnectViewController.swift in Sources */,
 				E1BA2217247047C200A8EEAB /* AppDelegate.swift in Sources */,
+				E1195B472477C69200787C18 /* PlayersViewController.swift in Sources */,
 				E1BA2219247047C200A8EEAB /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
