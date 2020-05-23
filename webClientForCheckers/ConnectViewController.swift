@@ -6,27 +6,35 @@ import UIKit
 import SocketIO
 import Foundation
 
-class ConnectViewController: UIViewController {
+class ConnectViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate {
+   
+    let cellReuseIdentifier = "cell"
     var me: [String: Any] = [:]
     var idlePlayers:[[String:Any]] = []
+    var playersAtDispalyFormat:[String] = []
     let scheme = "http"
     let port = 3000
     let host = "localhost"
     
-    let user: [String: Any] = ["userName": "iPhoneSE",
+    let user: [String: Any] = ["userName": "iPhone11pro",
                                "password": "abcd1234"]
+    
     let manager = SocketManager(socketURL: URL(string: "http://localhost:3000")!, config: [.log(false), .compress])
     
     @IBOutlet weak var outputText: UITextView!
+    @IBOutlet weak var PlayersTableView: UITableView!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.PlayersTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        PlayersTableView.delegate = self
+        PlayersTableView.dataSource = self
         socketConnect()
   //      self.createUser(user)
     }
     
-    
+    //temp buttons
     @IBAction func LogoutFunc(_ sender: Any) {
         self.logout()
     }
@@ -36,6 +44,13 @@ class ConnectViewController: UIViewController {
     @IBAction func toSE(_ sender: Any) {
         self.disconnect()
     }
+    @IBAction func socketButton(_ sender: Any) {
+        enterIdleUsersRoom()
+    }
+    @IBAction func displaySheet(_ sender: Any) {
+        self.gameOfferedBy(opponent: self.me)
+    }
+    //
     
     func createUser (_ user: [String: Any]) {
         
@@ -115,10 +130,7 @@ class ConnectViewController: UIViewController {
         task.resume()
     }
     
-    @IBAction func socketButton(_ sender: Any) {
-        enterIdleUsersRoom()
-    }
-    
+    //handle socket events
     func socketConnect () {
         let socket = manager.defaultSocket
          socket.on("connect") {data, ack in
@@ -127,7 +139,15 @@ class ConnectViewController: UIViewController {
         }
         socket.on("IdlePlayers") {data, ack in
             self.idlePlayers = data[0] as! [[String : Any]]
+            self.convertFromFullDescriptionToDisplayFormat()
             print("players in the room:", self.idlePlayers)
+            DispatchQueue.main.async {
+                self.PlayersTableView.reloadData()
+            }
+        }
+        socket.on("letsPlay") {data, ack in
+            print("thanks dude")
+            self.gameOfferedBy(opponent: data[0] as! [String : Any])
         }
         socket.on("reply") {data, ack in
             print("msg from any:", data[0])
@@ -136,27 +156,46 @@ class ConnectViewController: UIViewController {
             }
         }
         socket.connect()
-     //   CFRunLoopRun()
     }
-    
+    //emit events
     func enterIdleUsersRoom () {
         let socket = manager.defaultSocket
         socket.emit("enterAsIdlePlayer", self.me)
     }
     func emitToOther () {
         let socket = manager.defaultSocket
-        socket.emit("play",[self.me, "hello from SE"])
+        socket.emit("play",[self.me, "hello from 11pro"])
     }
     func getIdleUsers () {
         let socket = manager.defaultSocket
         socket.emit("getIdlePlayers", self.me)
     }
+    func offerGame (opponent:[String:Any]) {
+        let socket = manager.defaultSocket
+        socket.emit("offerGame", opponent)
+    }
     func disconnect () {
         let socket = manager.defaultSocket
         socket.emit("disconnect")
     }
-   
+                                            //Table funcs//
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.idlePlayers.count
+    }
+       
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+       let cell:UITableViewCell = self.PlayersTableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier)! as UITableViewCell
+       cell.textLabel?.text = self.playersAtDispalyFormat[indexPath.row]
+       
+       return cell
+    }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("row \(indexPath.row) picked")
+        let pickedPlayer = self.idlePlayers[indexPath.row]
+        self.offerGame(opponent: pickedPlayer)
+    }
+       
                                             //utility funcs//
     
     func stringify (json:[String: Any]) -> String {
@@ -185,41 +224,35 @@ class ConnectViewController: UIViewController {
         return request
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destinationVC:PlayersViewController = segue.destination as! PlayersViewController
-        destinationVC.playersFullDescription = self.idlePlayers
+    
+    func convertFromFullDescriptionToDisplayFormat () {
+        self.playersAtDispalyFormat = []
+        for user in idlePlayers {
+            let userDetails = user["user"]!
+            let descrpitionString = (userDetails as! [String:Any])["userName"] as! String
+            print (descrpitionString)
+            playersAtDispalyFormat.append(descrpitionString)
+        }
     }
+    
+    
+    
+    func gameOfferedBy (opponent:[String:Any]) {
+        let userDetails = opponent["user"]!
+        let descrpitionString = (userDetails as! [String:Any])["userName"] as! String
+        
+        let optionMenu = UIAlertController(title: nil, message: "play with \(descrpitionString)?", preferredStyle: .actionSheet)
+        let acceptAction = UIAlertAction(title: "Accept", style: .default) { action -> Void in
+            print("\n\n accepted")}
+        let declineAction = UIAlertAction(title: "Decline", style: .default) { action -> Void in
+            print("\n\n declined")}
+
+        optionMenu.addAction(acceptAction)
+        optionMenu.addAction(declineAction)
+
+        self.present(optionMenu, animated: true, completion: nil)
+    }
+   
 }
 
-/*
- 
-   func getUserByUserName (_ userName: String) {
-       // Create URL
-       let url = URL(string: "http://localhost:3000/users/:liat510")
-       guard let requestUrl = url else { fatalError() }
-       // Create URL Request
-       var request = URLRequest(url: requestUrl)
-       // Specify HTTP Method to use
-       request.httpMethod = "GET"
-       request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-       request.addValue("application/json", forHTTPHeaderField: "Accept")
-       
-       let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
 
-           if let error = error {
-               print("Error took place \(error)")
-               return
-           }
-           
-           if let response = response as? HTTPURLResponse {
-               print("Response HTTP Status code: \(response.statusCode)")
-           }
-
-           if let data = data, let dataString = String(data: data, encoding: .utf8) {
-               print("Response data string:\n \(dataString)")
-           }
-       }
-       task.resume()
-   }
-   
- */

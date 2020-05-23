@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3258646D94FBF8078B4CBA07 /* Pods_webClientForCheckers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 423C97F00D141C852F5F2067 /* Pods_webClientForCheckers.framework */; };
-		E1195B472477C69200787C18 /* PlayersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1195B462477C69200787C18 /* PlayersViewController.swift */; };
 		E1BA2217247047C200A8EEAB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BA2216247047C200A8EEAB /* AppDelegate.swift */; };
 		E1BA2219247047C200A8EEAB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BA2218247047C200A8EEAB /* SceneDelegate.swift */; };
 		E1BA221B247047C200A8EEAB /* ConnectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BA221A247047C200A8EEAB /* ConnectViewController.swift */; };
@@ -21,7 +20,6 @@
 /* Begin PBXFileReference section */
 		423C97F00D141C852F5F2067 /* Pods_webClientForCheckers.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_webClientForCheckers.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		82E3DDA12B8FEC1877DD59A2 /* Pods-webClientForCheckers.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-webClientForCheckers.release.xcconfig"; path = "Target Support Files/Pods-webClientForCheckers/Pods-webClientForCheckers.release.xcconfig"; sourceTree = "<group>"; };
-		E1195B462477C69200787C18 /* PlayersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayersViewController.swift; sourceTree = "<group>"; };
 		E1BA2213247047C200A8EEAB /* webClientForCheckers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = webClientForCheckers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1BA2216247047C200A8EEAB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1BA2218247047C200A8EEAB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -86,7 +84,6 @@
 			isa = PBXGroup;
 			children = (
 				E1BA2216247047C200A8EEAB /* AppDelegate.swift */,
-				E1195B462477C69200787C18 /* PlayersViewController.swift */,
 				E1BA2218247047C200A8EEAB /* SceneDelegate.swift */,
 				E1BA221A247047C200A8EEAB /* ConnectViewController.swift */,
 				E1BA221C247047C200A8EEAB /* Main.storyboard */,
@@ -215,7 +212,6 @@
 			files = (
 				E1BA221B247047C200A8EEAB /* ConnectViewController.swift in Sources */,
 				E1BA2217247047C200A8EEAB /* AppDelegate.swift in Sources */,
-				E1195B472477C69200787C18 /* PlayersViewController.swift in Sources */,
 				E1BA2219247047C200A8EEAB /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
