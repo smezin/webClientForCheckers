@@ -13,7 +13,7 @@ class ConnectViewController: UIViewController {
     let port = 3000
     let host = "localhost"
     
-    let user: [String: Any] = ["userName": "iPhone11pro",
+    let user: [String: Any] = ["userName": "iPhoneSE",
                                "password": "abcd1234"]
     let manager = SocketManager(socketURL: URL(string: "http://localhost:3000")!, config: [.log(false), .compress])
     
@@ -34,7 +34,7 @@ class ConnectViewController: UIViewController {
         self.login(user)
     }
     @IBAction func toSE(_ sender: Any) {
-        self.emitToOther()
+        self.disconnect()
     }
     
     func createUser (_ user: [String: Any]) {
@@ -145,11 +145,15 @@ class ConnectViewController: UIViewController {
     }
     func emitToOther () {
         let socket = manager.defaultSocket
-        socket.emit("play",[self.me, "hello from 11pro"])
+        socket.emit("play",[self.me, "hello from SE"])
     }
     func getIdleUsers () {
         let socket = manager.defaultSocket
         socket.emit("getIdlePlayers", self.me)
+    }
+    func disconnect () {
+        let socket = manager.defaultSocket
+        socket.emit("disconnect")
     }
    
     
