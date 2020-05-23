@@ -16,7 +16,7 @@ class ConnectViewController: UIViewController, UITableViewDelegate, UITableViewD
     let port = 3000
     let host = "localhost"
     
-    let user: [String: Any] = ["userName": "iPhone11pro",
+    let user: [String: Any] = ["userName": "iPhoneSE",
                                "password": "abcd1234"]
     
     let manager = SocketManager(socketURL: URL(string: "http://localhost:3000")!, config: [.log(false), .compress])
@@ -139,7 +139,7 @@ class ConnectViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         socket.on("IdlePlayers") {data, ack in
             self.idlePlayers = data[0] as! [[String : Any]]
-            self.convertFromFullDescriptionToDisplayFormat()
+            self.convertPlayersToDisplayDescription()
             print("players in the room:", self.idlePlayers)
             DispatchQueue.main.async {
                 self.PlayersTableView.reloadData()
@@ -148,6 +148,12 @@ class ConnectViewController: UIViewController, UITableViewDelegate, UITableViewD
         socket.on("letsPlay") {data, ack in
             print("thanks dude")
             self.gameOfferedBy(opponent: data[0] as! [String : Any])
+        }
+        socket.on("startingGame") {data, ack in
+            print("starting game!!!")
+        }
+        socket.on("noGame") {data, ack in
+            print("no game!!!")
         }
         socket.on("reply") {data, ack in
             print("msg from any:", data[0])
@@ -164,7 +170,7 @@ class ConnectViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     func emitToOther () {
         let socket = manager.defaultSocket
-        socket.emit("play",[self.me, "hello from 11pro"])
+        socket.emit("play",[self.me, "hello from SE"])
     }
     func getIdleUsers () {
         let socket = manager.defaultSocket
@@ -173,6 +179,14 @@ class ConnectViewController: UIViewController, UITableViewDelegate, UITableViewD
     func offerGame (opponent:[String:Any]) {
         let socket = manager.defaultSocket
         socket.emit("offerGame", opponent)
+    }
+    func acceptGame (_ opponent:[String:Any]) {
+        let socket = manager.defaultSocket
+        socket.emit("gameAccepted", opponent)
+    }
+    func declineGame (_ opponent:[String:Any]) {
+        let socket = manager.defaultSocket
+        socket.emit("gameDeclined", opponent)
     }
     func disconnect () {
         let socket = manager.defaultSocket
@@ -225,27 +239,32 @@ class ConnectViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     
-    func convertFromFullDescriptionToDisplayFormat () {
+    func convertPlayersToDisplayDescription () {
         self.playersAtDispalyFormat = []
-        for user in idlePlayers {
-            let userDetails = user["user"]!
-            let descrpitionString = (userDetails as! [String:Any])["userName"] as! String
-            print (descrpitionString)
-            playersAtDispalyFormat.append(descrpitionString)
+        for player in idlePlayers {
+            let playerDisplayDescription = self.convertPlayerToDisplayDescription(player: player)
+            playersAtDispalyFormat.append(playerDisplayDescription)
+            print (playerDisplayDescription)
         }
     }
     
-    
+    func convertPlayerToDisplayDescription (player:[String:Any]) -> String {
+        let userDetails = player["user"]!
+        let displayDescription = (userDetails as! [String:Any])["userName"] as! String
+        return displayDescription
+    }
     
     func gameOfferedBy (opponent:[String:Any]) {
-        let userDetails = opponent["user"]!
-        let descrpitionString = (userDetails as! [String:Any])["userName"] as! String
-        
+        let descrpitionString = self.convertPlayerToDisplayDescription(player: opponent)
         let optionMenu = UIAlertController(title: nil, message: "play with \(descrpitionString)?", preferredStyle: .actionSheet)
         let acceptAction = UIAlertAction(title: "Accept", style: .default) { action -> Void in
-            print("\n\n accepted")}
+            print("\n\n accepted")
+            self.acceptGame(opponent)
+        }
         let declineAction = UIAlertAction(title: "Decline", style: .default) { action -> Void in
-            print("\n\n declined")}
+            print("\n\n declined")
+            self.declineGame(opponent)
+        }
 
         optionMenu.addAction(acceptAction)
         optionMenu.addAction(declineAction)
