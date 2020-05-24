@@ -9,7 +9,8 @@ import Foundation
 class ConnectViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIActionSheetDelegate {
    
     let cellReuseIdentifier = "cell"
-    var me: [String: Any] = [:]
+    var me:[String: Any] = [:]
+    var myOpponent:[String:Any] = [:]
     var idlePlayers:[[String:Any]] = []
     var playersAtDispalyFormat:[String] = []
     let scheme = "http"
@@ -150,7 +151,8 @@ class ConnectViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.gameOfferedBy(opponent: data[0] as! [String : Any])
         }
         socket.on("startingGame") {data, ack in
-            print("starting game!!!")
+            print("starting game!!!", data[0])
+            self.myOpponent = data[0] as! [String:Any]
         }
         socket.on("noGame") {data, ack in
             print("no game!!!")
@@ -168,7 +170,7 @@ class ConnectViewController: UIViewController, UITableViewDelegate, UITableViewD
         let socket = manager.defaultSocket
         socket.emit("enterAsIdlePlayer", self.me)
     }
-    func emitToOther () {
+    func sendGameMove () {
         let socket = manager.defaultSocket
         socket.emit("play",[self.me, "hello from SE"])
     }
